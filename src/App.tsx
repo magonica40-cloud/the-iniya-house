@@ -21,6 +21,39 @@ export function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Dynamic SEO Updates Per Tab
+  useEffect(() => {
+    const seoMap: Record<string, { title: string; desc: string }> = {
+      home: {
+        title: 'The Iniya House — Luxury Event Management & Corporate Summits | Bangalore',
+        desc: 'The Iniya House is a premier luxury event management company in Bangalore. Specializing in corporate summits, MICE offsites, AV equipment rental, and corporate gifting with 100+ executed projects.',
+      },
+      services: {
+        title: 'Turnkey Event Production, MICE Offsites & AV Equipment Rental | The Iniya House',
+        desc: 'Explore our full spectrum of corporate events, MICE destination offsites, standalone audio-visual equipment rental, and live interactive scope estimator.',
+      },
+      work: {
+        title: 'Executed Case Dossiers & Scenographic Portfolio | The Iniya House Bangalore',
+        desc: 'Inspect our portfolio of delivered medical conclaves, enterprise assemblies, royal palace galas, and concert stage engineering across South India.',
+      },
+      gifting: {
+        title: 'Curated Corporate Gifting & Executive Hampers | The Iniya House',
+        desc: 'Thoughtfully curated business gifting across 7 categories: electronic gadgets, vegan leather planners, premium drinkware, custom jerseys, trophies, and festive hampers.',
+      },
+      contact: {
+        title: 'Plan Your Event & Commission Inquiries | The Iniya House Atelier Bangalore',
+        desc: 'Direct liaison conduit for initiating corporate summits, MICE offsites, or corporate gifting commissions. Fast 4-hour review and WhatsApp integration.',
+      },
+    };
+
+    const currentSeo = seoMap[currentTab] || seoMap.home;
+    document.title = currentSeo.title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', currentSeo.desc);
+    }
+  }, [currentTab]);
+
   const handleNavigate = (tab: string) => {
     setCurrentTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });

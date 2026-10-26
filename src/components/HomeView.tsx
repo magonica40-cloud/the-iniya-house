@@ -21,6 +21,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
           HERO SECTION
           ========================================================= */}
       <section
+        id="hero"
         style={{
           position: 'relative',
           padding: '6rem 0 5rem',
@@ -183,7 +184,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
       {/* =========================================================
           THE ABOUT US MANIFESTO & REAL SHOWCASE
           ========================================================= */}
-      <section style={{ backgroundColor: 'var(--bg-surface-low)', padding: '6rem 0', borderTop: '1px solid var(--border-hairline)' }}>
+      <section id="about" style={{ backgroundColor: 'var(--bg-surface-low)', padding: '6rem 0', borderTop: '1px solid var(--border-hairline)' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '3rem', alignItems: 'center' }}>
             {/* Left Column Manifesto */}
@@ -309,7 +310,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
       {/* =========================================================
           THE FOUR CORE VERTICALS
           ========================================================= */}
-      <section style={{ padding: '6rem 0', backgroundColor: 'var(--bg-surface)' }}>
+      <section id="verticals" style={{ padding: '6rem 0', backgroundColor: 'var(--bg-surface)' }}>
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: '750px', margin: '0 auto 4rem' }}>
             <div className="badge-gold" style={{ marginBottom: '1rem' }}>
@@ -384,7 +385,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
       {/* =========================================================
           EXECUTED CASE DOSSIERS
           ========================================================= */}
-      <section style={{ padding: '6rem 0', backgroundColor: 'var(--bg-surface-low)' }}>
+      <section id="portfolio" style={{ padding: '6rem 0', backgroundColor: 'var(--bg-surface-low)' }}>
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '3rem' }}>
             <div>
@@ -509,7 +510,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
       {/* =========================================================
           PRODUCTION EQUIPMENT RENTAL INVENTORY (FROM OFFICIAL PDF)
           ========================================================= */}
-      <section style={{ padding: '5rem 0', backgroundColor: 'var(--bg-surface)' }}>
+      <section id="equipment-rental" style={{ padding: '5rem 0', backgroundColor: 'var(--bg-surface)' }}>
         <div className="container">
           <div className="royal-card" style={{ padding: '3rem', backgroundColor: '#FFFFFF', borderRadius: '4px', border: '1px solid var(--border-gold)' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center' }}>
@@ -565,7 +566,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
       {/* =========================================================
           THE CADENCE OF CREATION (METHODOLOGY)
           ========================================================= */}
-      <section style={{ padding: '6rem 0', backgroundColor: 'var(--bg-surface-low)' }}>
+      <section id="methodology" style={{ padding: '6rem 0', backgroundColor: 'var(--bg-surface-low)' }}>
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 4rem' }}>
             <div className="badge-gold" style={{ marginBottom: '1rem' }}>
@@ -614,7 +615,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
       {/* =========================================================
           REAL CLIENTELE MARQUEE (10 VERIFIED LOGOS FROM OFFICIAL PDF)
           ========================================================= */}
-      <section style={{ padding: '5.5rem 0', backgroundColor: 'var(--bg-surface)', overflow: 'hidden' }}>
+      <section id="client-partners" style={{ padding: '5.5rem 0', backgroundColor: 'var(--bg-surface)', overflow: 'hidden' }}>
         <div className="container" style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
           <span className="font-meta" style={{ fontSize: '11px', color: 'var(--gold-secondary)', display: 'block', marginBottom: '0.5rem' }}>
             OFFICIAL CLIENTELE & ENTERPRISE PARTNERS
@@ -665,7 +666,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
       {/* =========================================================
           CLOSING CALL TO ACTION & DIRECT BRIEFING DISPATCH
           ========================================================= */}
-      <section style={{ padding: '6rem 0', backgroundColor: 'var(--bg-surface-low)' }}>
+      <section id="inquiry" style={{ padding: '6rem 0', backgroundColor: 'var(--bg-surface-low)' }}>
         <div className="container">
           <div className="obsidian-card" style={{ padding: 'clamp(2.5rem, 5vw, 4.5rem)', borderRadius: '2px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center', position: 'relative', zIndex: 1 }}>
