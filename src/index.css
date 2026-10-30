@@ -1,48 +1,36 @@
 /* =========================================================
-   THE INIYA HOUSE — SOVEREIGN SCENOGRAPHY & ROYAL ARCHITECTURE
-   Core Design System & Token Specifications
+   THE INIYA HOUSE — LIVE EVENT MANAGEMENT & ENTERTAINMENT
+   DNA Networks Inspired High-Production Design System
    ========================================================= */
 
 :root {
-  /* Surfaces & Alabaster Canvas */
-  --bg-surface: #FAF8F5;
-  --bg-surface-low: #F4F0E8;
-  --bg-surface-lowest: #FFFFFF;
-  --bg-surface-high: #EAE6DC;
-  
-  /* Ink & Contrast */
-  --text-primary: #111216;
-  --text-secondary: #4A463F;
-  --text-muted: #7E786E;
-  --text-inverse: #FAF8F5;
-  
-  /* Sovereign Metallics & Accents */
-  --gold-primary: #C59B27;
-  --gold-secondary: #8C6D23;
-  --gold-tertiary: #E8D8A6;
-  --gold-glow: rgba(197, 155, 39, 0.25);
-  --gold-subtle: rgba(197, 155, 39, 0.08);
-  
-  /* Obsidian Chamber (Dark Accents) */
-  --obsidian-surface: #111216;
-  --obsidian-card: #18191E;
-  --obsidian-border: rgba(197, 155, 39, 0.25);
-  
+  /* Canvas & Contrasts */
+  --bg-black: #000000;
+  --bg-dark-1: #0A0A0A;
+  --bg-dark-2: #121212;
+  --bg-dark-3: #1A1A1A;
+  --bg-light: #F6F6F8;
+  --bg-light-card: #FFFFFF;
+
+  /* Typography Colors */
+  --text-white: #FFFFFF;
+  --text-gray-300: #D1D5DB;
+  --text-gray-400: #9CA3AF;
+  --text-gray-500: #6B7280;
+  --text-dark: #000000;
+  --text-dark-muted: #4B5563;
+
+  /* Accent Highlight (Subtle electric cyan / warm amber brand touch) */
+  --accent-cyan: #00C2CB;
+  --accent-gold: #D4AF37;
+
   /* Hairline Borders */
-  --border-hairline: #E2D9CC;
-  --border-gold: rgba(197, 155, 39, 0.35);
-  
-  /* Elevation Shadows */
-  --shadow-sm: 0 2px 8px rgba(17, 18, 22, 0.04);
-  --shadow-md: 0 8px 24px rgba(17, 18, 22, 0.06), 0 2px 6px rgba(197, 155, 39, 0.04);
-  --shadow-lg: 0 16px 40px rgba(17, 18, 22, 0.08), 0 4px 16px rgba(197, 155, 39, 0.08);
-  --shadow-royal: 0 24px 64px -12px rgba(17, 18, 22, 0.16), 0 8px 24px rgba(197, 155, 39, 0.12);
-  
+  --border-dark: rgba(255, 255, 255, 0.12);
+  --border-light: rgba(0, 0, 0, 0.08);
+
   /* Typography Families */
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'Space Grotesk', monospace;
-  --font-display: 'Outfit', sans-serif;
+  --font-dna: 'Golos Text', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Golos Text', 'Inter', system-ui, sans-serif;
 }
 
 * {
@@ -53,53 +41,39 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: var(--bg-surface);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
+  background-color: var(--bg-black);
+  color: var(--text-white);
+  font-family: var(--font-dna);
   -webkit-font-smoothing: antialiased;
 }
 
 body {
   overflow-x: hidden;
-  line-height: 1.6;
+  background-color: var(--bg-black);
+  color: var(--text-white);
+  line-height: 1.5;
 }
 
-/* Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-surface-low);
+  background: #000000;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D4C9B8;
-  border-radius: 4px;
+  background: #262626;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--gold-primary);
-}
-
-/* Typography Utility Classes */
-.font-headline {
-  font-family: var(--font-serif);
-}
-.font-meta {
-  font-family: var(--font-mono);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-.font-body {
-  font-family: var(--font-sans);
-}
-.font-display {
-  font-family: var(--font-display);
+  background: #525252;
 }
 
 /* Layout Containers */
 .container {
-  max-width: 1440px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 4rem;
+  padding: 0 3.5rem;
 }
 
 @media (max-width: 1024px) {
@@ -113,196 +87,437 @@ body {
   }
 }
 
-/* Royal Cards & Surfaces */
-.royal-card {
-  background-color: var(--bg-surface-lowest);
-  border: 1px solid var(--border-hairline);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-}
-
-.royal-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--gold-primary);
-  box-shadow: var(--shadow-md);
-}
-
-.obsidian-card {
-  background-color: var(--obsidian-surface);
-  color: var(--text-inverse);
-  border: 1px solid var(--obsidian-border);
-  box-shadow: var(--shadow-royal);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Sovereign Badges */
-.badge-gold {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.85rem;
-  background-color: var(--bg-surface-low);
-  border: 1px solid var(--border-gold);
-  border-radius: 2px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
+/* Typography Hierarchy - DNA Networks Style */
+.heading-monumental {
+  font-family: var(--font-dna);
+  font-size: clamp(2.5rem, 5.8vw, 4.8rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
-  color: var(--gold-secondary);
 }
 
-.badge-obsidian {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.85rem;
-  background-color: var(--obsidian-surface);
-  color: var(--gold-tertiary);
-  border: 1px solid var(--gold-primary);
-  font-family: var(--font-mono);
-  font-size: 11px;
+.heading-section {
+  font-family: var(--font-dna);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.heading-sub {
+  font-family: var(--font-dna);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
   font-weight: 600;
+  line-height: 1.25;
+}
+
+.label-micro {
+  font-family: var(--font-dna);
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
-/* Sovereign Buttons */
-.btn-royal-primary {
+.body-large {
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  line-height: 1.65;
+  color: var(--text-gray-300);
+}
+
+.body-regular {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-gray-400);
+}
+
+/* Signature DNA Networks Arrow Button */
+.btn-dna {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 0.85rem 1.75rem;
-  background-color: var(--obsidian-surface);
+  gap: 1.25rem;
+  background: transparent;
   color: #FFFFFF;
-  border: 1px solid var(--gold-primary);
-  font-family: var(--font-mono);
+  border: none;
+  font-family: var(--font-dna);
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-
-.btn-royal-primary:hover {
-  background-color: var(--gold-primary);
-  color: var(--obsidian-surface);
-  border-color: var(--gold-primary);
-  box-shadow: 0 4px 20px var(--gold-glow);
-  transform: translateY(-2px);
-}
-
-.btn-royal-gold {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 0.85rem 1.75rem;
-  background-color: var(--gold-primary);
-  color: var(--obsidian-surface);
-  border: 1px solid var(--gold-primary);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
   font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
 }
 
-.btn-royal-gold:hover {
-  background-color: var(--obsidian-surface);
-  color: #FFFFFF;
-  box-shadow: 0 4px 20px var(--gold-glow);
-  transform: translateY(-2px);
+.btn-dna svg.btn__arrow {
+  width: 50px;
+  height: 10px;
+  stroke: #FFFFFF;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.2s ease;
 }
 
-.btn-royal-outline {
+.btn-dna:hover svg.btn__arrow {
+  transform: translateX(10px);
+}
+
+.btn-dna-dark {
+  color: #000000;
+}
+.btn-dna-dark svg.btn__arrow {
+  stroke: #000000;
+}
+
+/* Solid Tag Buttons */
+.btn-dna-solid {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
+  gap: 0.85rem;
   padding: 0.85rem 1.75rem;
-  background-color: var(--bg-surface-lowest);
-  color: var(--text-primary);
-  border: 1px solid var(--border-hairline);
-  font-family: var(--font-mono);
+  background: #FFFFFF;
+  color: #000000;
+  font-family: var(--font-dna);
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid #FFFFFF;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-decoration: none;
 }
 
-.btn-royal-outline:hover {
-  border-color: var(--gold-primary);
-  color: var(--gold-secondary);
-  background-color: var(--bg-surface-low);
-  transform: translateY(-2px);
+.btn-dna-solid:hover {
+  background: transparent;
+  color: #FFFFFF;
 }
 
-/* Animations */
-@keyframes ticker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+.btn-dna-solid svg.btn__arrow {
+  width: 38px;
+  height: 10px;
+  stroke: currentColor;
+  transition: transform 0.3s ease;
 }
 
-.marquee-track {
+.btn-dna-solid:hover svg.btn__arrow {
+  transform: translateX(6px);
+}
+
+/* DNA Networks Photo-Backed Stats Cards */
+.stats-card {
+  position: relative;
+  min-height: 280px;
   display: flex;
-  width: max-content;
-  animation: ticker 32s linear infinite;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  overflow: hidden;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.marquee-track:hover {
-  animation-play-state: paused;
+.stats-card:last-child {
+  border-right: none;
 }
 
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.25; transform: scale(1); }
-  50% { opacity: 0.45; transform: scale(1.05); }
-}
-
-.gilded-orb {
+.stats-card-bg {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-  z-index: 0;
-  animation: pulseGlow 8s ease-in-out infinite;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.38) saturate(1.15);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+  z-index: 1;
 }
 
-/* Range Input Slider */
-input[type="range"].gold-slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 6px;
-  background: var(--bg-surface-high);
-  border-radius: 4px;
-  outline: none;
+.stats-card:hover .stats-card-bg {
+  transform: scale(1.08);
+  filter: brightness(0.5) saturate(1.3);
 }
 
-input[type="range"].gold-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--gold-primary);
-  border: 2px solid #FFFFFF;
-  box-shadow: 0 2px 10px rgba(197, 155, 39, 0.4);
+.stats-card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.stats-card-number {
+  font-family: var(--font-dna);
+  font-size: clamp(3.2rem, 5.5vw, 4.8rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1;
+  margin-bottom: 0.65rem;
+  letter-spacing: -0.02em;
+}
+
+.stats-card-label {
+  font-family: var(--font-dna);
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* DNA Networks Featured Events Grid Card */
+.event-grid-card {
+  position: relative;
+  height: 380px;
+  overflow: hidden;
   cursor: pointer;
-  transition: transform 0.15s ease;
+  background-color: var(--bg-dark-1);
 }
 
-input[type="range"].gold-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
+.event-grid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  filter: brightness(0.75);
 }
+
+.event-grid-card:hover .event-grid-img {
+  transform: scale(1.06);
+  filter: brightness(0.9);
+}
+
+.event-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.1) 100%);
+  transition: background 0.3s ease;
+}
+
+.event-grid-card:hover .event-grid-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.15) 60%, transparent 100%);
+}
+
+.event-grid-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  z-index: 2;
+}
+
+.event-grid-title {
+  font-family: var(--font-dna);
+  font-size: 22px;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.event-grid-card:hover .event-grid-title {
+  color: #FFFFFF;
+}
+
+.event-grid-meta {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-gray-400);
+}
+
+/* DNA Networks Clientele Grid ("Who We Work With") */
+.client-logo-box {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.client-logo-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  border-color: #000000;
+}
+
+.client-logo-box img {
+  max-width: 80%;
+  max-height: 70%;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.85;
+  transition: all 0.3s ease;
+}
+
+.client-logo-box:hover img {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Interactive Product Catalog Pills */
+.dna-pill {
+  padding: 0.55rem 1.25rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-gray-400);
+  font-family: var(--font-dna);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.dna-pill:hover {
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+}
+
+.dna-pill.active {
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
+}
+
+/* Form Styles */
+.dna-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  font-family: var(--font-dna);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.dna-input:focus {
+  border-color: #FFFFFF;
+  background: #181818;
+}
+
+.dna-input::placeholder {
+  color: #6B7280;
+}
+
+/* =========================================================
+   DNA NETWORKS SIGNATURE EXTENSIONS
+   ========================================================= */
+
+/* Signature Script Typography for Founder/Brand Quotation */
+.font-signature {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: #FFFFFF;
+}
+
+/* DNA Networks Signature Orange Banner */
+.dna-orange-banner {
+  background-color: #D95900;
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Light / White Sections (Featured Events & Clientele Split Layout) */
+.section-light {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+.section-light h2,
+.section-light h3,
+.section-light .heading-section {
+  color: #000000;
+}
+
+.section-light p,
+.section-light .body-large {
+  color: #374151;
+}
+
+.section-light .body-regular {
+  color: #4B5563;
+}
+
+/* DNA Video Sound Toggle Button */
+.video-sound-toggle {
+  position: absolute;
+  right: 3rem;
+  bottom: 3rem;
+  z-index: 25;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+  padding: 0.65rem 1.15rem;
+  border-radius: 99px;
+  font-family: var(--font-dna);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.video-sound-toggle:hover {
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+  .video-sound-toggle {
+    right: 1.25rem;
+    bottom: 1.5rem;
+  }
+}
+
+/* Central Video Atmosphere Ring */
+.hero-center-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 8;
+  animation: pulseRing 3.5s infinite ease-in-out;
+}
+
+@keyframes pulseRing {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 0.85;
+  }
+}
+

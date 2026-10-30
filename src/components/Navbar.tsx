@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Edit3, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 interface NavbarProps {
-  currentTab: string;
-  setCurrentTab: (tab: string) => void;
+  activeSection: string;
+  onNavigateSection: (sectionId: string) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => {
+export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigateSection }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -14,17 +14,25 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { id: 'home', label: 'Home' },
+    { id: 'work', label: 'Work' },
+    { id: 'brands', label: 'Verticals' },
     { id: 'services', label: 'Services' },
-    { id: 'work', label: 'Our Work' },
-    { id: 'gifting', label: 'Curated Gifting' },
-    { id: 'contact', label: 'Contact' },
+    { id: 'rentals', label: 'Rentals' },
+    { id: 'leisures', label: 'Leisures' },
+    { id: 'gifting', label: 'Gifting' },
+    { id: 'clientele', label: 'Clientele' },
+    { id: 'about', label: 'About' },
   ];
+
+  const handleLinkClick = (id: string) => {
+    setMobileOpen(false);
+    onNavigateSection(id);
+  };
 
   return (
     <header
@@ -34,202 +42,357 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
         left: 0,
         right: 0,
         zIndex: 100,
-        backgroundColor: scrolled ? 'rgba(250, 248, 245, 0.94)' : 'rgba(250, 248, 245, 0.85)',
-        backdropFilter: 'blur(16px)',
-        borderBottom: '1px solid var(--border-hairline)',
-        boxShadow: scrolled ? '0 4px 20px rgba(197, 155, 39, 0.08)' : 'none',
-        transition: 'all 0.3s ease',
+        backgroundColor: scrolled ? 'rgba(0, 0, 0, 0.92)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid transparent',
+        transition: 'background-color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease',
       }}
     >
       <div
         className="container"
         style={{
-          height: '80px',
+          height: '84px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '1.5rem',
+          gap: '2rem',
         }}
       >
-        {/* Brand Token & Name */}
+        {/* Brand Logo - DNA Networks Inspired Clean Minimalist Typography */}
         <div
-          onClick={() => { setCurrentTab('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-          style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', cursor: 'pointer' }}
+          onClick={() => handleLinkClick('hero')}
+          style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', userSelect: 'none' }}
         >
-          <div
-            style={{
-              width: '42px',
-              height: '42px',
-              borderRadius: '2px',
-              backgroundColor: 'var(--obsidian-surface)',
-              border: '1px solid var(--gold-primary)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'var(--gold-primary)',
-              boxShadow: '0 2px 10px rgba(197, 155, 39, 0.15)',
-            }}
-          >
-            <span style={{ fontFamily: 'var(--font-serif)', fontWeight: 'bold', fontSize: '18px' }}>IH</span>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
             <span
-              className="font-headline"
               style={{
-                fontSize: '18px',
-                fontWeight: 700,
+                fontFamily: 'var(--font-dna)',
+                fontSize: '22px',
+                fontWeight: 900,
                 letterSpacing: '0.04em',
-                color: 'var(--text-primary)',
+                color: '#FFFFFF',
                 textTransform: 'uppercase',
-                lineHeight: 1.1,
+                lineHeight: 1,
               }}
             >
               The Iniya House
             </span>
             <span
-              className="font-meta"
               style={{
-                fontSize: '10px',
-                color: 'var(--gold-secondary)',
-                letterSpacing: '0.18em',
-                fontWeight: 600,
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                backgroundColor: 'var(--accent-cyan)',
+                display: 'inline-block',
               }}
-            >
-              Arts · Events · Entertainment
-            </span>
+            />
           </div>
+          <span
+            style={{
+              fontFamily: 'var(--font-dna)',
+              fontSize: '10px',
+              fontWeight: 700,
+              letterSpacing: '0.18em',
+              color: 'var(--text-gray-400)',
+              textTransform: 'uppercase',
+              marginTop: '4px',
+            }}
+          >
+            Arts | Events | Entertainment
+          </span>
         </div>
 
-        {/* Desktop Nav Links */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '2rem' }} className="desktop-nav">
-          {navLinks.map((link) => {
-            const isActive = currentTab === link.id;
+        {/* Center Desktop Navigation */}
+        <nav
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2.2rem',
+          }}
+          className="desktop-nav"
+        >
+          {navLinks.map((item) => {
+            const isActive = activeSection === item.id;
             return (
               <button
-                key={link.id}
-                onClick={() => {
-                  setCurrentTab(link.id);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="font-meta"
+                key={item.id}
+                onClick={() => handleLinkClick(item.id)}
                 style={{
-                  background: 'none',
+                  background: 'transparent',
                   border: 'none',
-                  fontSize: '12px',
-                  fontWeight: isActive ? 700 : 500,
-                  color: isActive ? 'var(--gold-secondary)' : 'var(--text-secondary)',
+                  color: isActive ? '#FFFFFF' : 'var(--text-gray-400)',
+                  fontSize: '13px',
+                  fontWeight: 700,
+                  fontFamily: 'var(--font-dna)',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
                   cursor: 'pointer',
-                  padding: '6px 0',
+                  padding: '0.5rem 0',
                   position: 'relative',
-                  borderBottom: isActive ? '2px solid var(--gold-primary)' : '2px solid transparent',
-                  transition: 'all 0.2s ease',
+                  transition: 'color 0.2s ease',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = '#FFFFFF')}
+                onMouseLeave={(e) => {
+                  if (!isActive) e.currentTarget.style.color = 'var(--text-gray-400)';
                 }}
               >
-                {link.label}
+                {item.label}
+                {isActive && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      bottom: '-2px',
+                      left: 0,
+                      right: 0,
+                      height: '2px',
+                      backgroundColor: '#FFFFFF',
+                    }}
+                  />
+                )}
               </button>
             );
           })}
         </nav>
 
-        {/* Header Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '6px 14px',
-              backgroundColor: 'var(--bg-surface-lowest)',
-              border: '1px solid var(--border-hairline)',
-              borderRadius: '2px',
-              boxShadow: 'var(--shadow-sm)',
-            }}
-            className="phone-badge"
-          >
-            <Phone size={14} color="var(--gold-primary)" />
-            <span
-              className="font-meta"
-              style={{ fontSize: '11px', color: 'var(--text-secondary)', letterSpacing: '0.05em' }}
-            >
-              +91 74113 92703
-            </span>
-          </div>
-
+        {/* Right CTA with Signature DNA Networks Extended Arrow */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
           <button
-            onClick={() => {
-              setCurrentTab('contact');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="btn-royal-primary"
-            style={{ padding: '0.65rem 1.25rem', fontSize: '11px' }}
+            onClick={() => handleLinkClick('contact')}
+            className="btn-dna desktop-connect"
+            style={{ fontSize: '13px' }}
           >
-            <Edit3 size={14} />
-            <span>Initiate Commission</span>
+            <span>Connect</span>
+            <svg
+              className="btn__arrow"
+              xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              height="10"
+              viewBox="0 0 59 10"
+              fill="none"
+            >
+              <path d="M0 5H57.5" stroke="currentColor" />
+              <path d="M53.5 1L57.5 5L53.5 9" stroke="currentColor" />
+            </svg>
           </button>
 
-          {/* Mobile Menu Button */}
+          {/* DNA Networks Circular White Hamburger Button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             style={{
-              background: 'none',
-              border: 'none',
+              background: mobileOpen ? '#000000' : '#FFFFFF',
+              border: mobileOpen ? '1px solid rgba(255, 255, 255, 0.4)' : 'none',
+              color: mobileOpen ? '#FFFFFF' : '#000000',
+              width: '46px',
+              height: '46px',
+              borderRadius: '50%',
               cursor: 'pointer',
-              color: 'var(--text-primary)',
-              display: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.25)',
+              transition: 'all 0.25s ease',
+              flexShrink: 0,
             }}
-            className="mobile-toggle"
-            aria-label="Toggle navigation menu"
+            title="Menu Drawer"
+            aria-label="Toggle navigation drawer"
           >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Full-Screen Cinematic Menu Drawer (DNA Networks Signature) */}
       {mobileOpen && (
         <div
           style={{
-            backgroundColor: 'var(--bg-surface-lowest)',
-            borderTop: '1px solid var(--border-hairline)',
-            padding: '1.5rem',
+            position: 'fixed',
+            inset: 0,
+            zIndex: 999,
+            backgroundColor: 'rgba(0, 0, 0, 0.97)',
+            backdropFilter: 'blur(20px)',
             display: 'flex',
             flexDirection: 'column',
-            gap: '1rem',
+            justifyContent: 'center',
+            padding: '6rem 3rem 3rem',
+            overflowY: 'auto',
           }}
         >
-          {navLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => {
-                setCurrentTab(link.id);
-                setMobileOpen(false);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="font-meta"
+          <div className="container" style={{ width: '100%', maxWidth: '1300px', margin: '0 auto' }}>
+            <div
               style={{
-                background: 'none',
-                border: 'none',
-                textAlign: 'left',
-                fontSize: '13px',
-                color: currentTab === link.id ? 'var(--gold-primary)' : 'var(--text-primary)',
-                fontWeight: currentTab === link.id ? 700 : 500,
-                padding: '0.5rem 0',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '3.5rem',
+                alignItems: 'start',
               }}
             >
-              {link.label}
-            </button>
-          ))}
+              {/* Left Column: Numbered Navigation Links */}
+              <div>
+                <span
+                  style={{
+                    fontFamily: 'var(--font-dna)',
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    letterSpacing: '0.18em',
+                    color: 'var(--text-gray-500)',
+                    textTransform: 'uppercase',
+                    display: 'block',
+                    marginBottom: '1.5rem',
+                  }}
+                >
+                  NAVIGATION DIRECTORY
+                </span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                  {navLinks.map((item, idx) => (
+                    <button
+                      key={item.id}
+                      onClick={() => handleLinkClick(item.id)}
+                      style={{
+                        background: 'transparent',
+                        border: 'none',
+                        color: activeSection === item.id ? 'var(--accent-cyan)' : '#FFFFFF',
+                        fontFamily: 'var(--font-dna)',
+                        fontSize: 'clamp(1.4rem, 2.8vw, 2.2rem)',
+                        fontWeight: 800,
+                        textAlign: 'left',
+                        textTransform: 'uppercase',
+                        letterSpacing: '-0.01em',
+                        cursor: 'pointer',
+                        padding: '0.25rem 0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1.25rem',
+                        transition: 'color 0.2s ease, transform 0.2s ease',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateX(10px)';
+                        e.currentTarget.style.color = 'var(--accent-cyan)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateX(0)';
+                        if (activeSection !== item.id) e.currentTarget.style.color = '#FFFFFF';
+                      }}
+                    >
+                      <span style={{ fontSize: '13px', color: 'var(--text-gray-500)', fontWeight: 600 }}>
+                        0{idx + 1}.
+                      </span>
+                      <span>{item.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right Column: Bangalore Liaison Info & Direct Connect */}
+              <div
+                style={{
+                  borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
+                  paddingLeft: '3rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '2.5rem',
+                }}
+              >
+                <div>
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-dna)',
+                      fontSize: '11px',
+                      fontWeight: 700,
+                      letterSpacing: '0.18em',
+                      color: 'var(--text-gray-500)',
+                      textTransform: 'uppercase',
+                      display: 'block',
+                      marginBottom: '0.75rem',
+                    }}
+                  >
+                    BENGALURU HEADQUARTERS
+                  </span>
+                  <h4 style={{ fontSize: '18px', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.5rem' }}>
+                    THE INIYA HOUSE
+                  </h4>
+                  <p style={{ fontSize: '14px', color: 'var(--text-gray-400)', lineHeight: 1.6 }}>
+                    GKW Layout, Vijayanagar / Magadi Road,
+                    <br />
+                    Bengaluru, Karnataka 560023
+                  </p>
+                </div>
+
+                <div>
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-dna)',
+                      fontSize: '11px',
+                      fontWeight: 700,
+                      letterSpacing: '0.18em',
+                      color: 'var(--text-gray-500)',
+                      textTransform: 'uppercase',
+                      display: 'block',
+                      marginBottom: '0.75rem',
+                    }}
+                  >
+                    DIRECT CONCIERGE LIAISON
+                  </span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <a
+                      href="tel:+917411392703"
+                      style={{
+                        color: '#FFFFFF',
+                        textDecoration: 'none',
+                        fontSize: '16px',
+                        fontWeight: 700,
+                        fontFamily: 'var(--font-dna)',
+                      }}
+                    >
+                      +91 74113 92703
+                    </a>
+                    <a
+                      href="mailto:info.iniyahouse@gmail.com"
+                      style={{
+                        color: 'var(--text-gray-400)',
+                        textDecoration: 'none',
+                        fontSize: '14px',
+                      }}
+                    >
+                      info.iniyahouse@gmail.com
+                    </a>
+                  </div>
+                </div>
+
+                <div>
+                  <button
+                    onClick={() => handleLinkClick('contact')}
+                    className="btn-dna-solid"
+                    style={{ padding: '1rem 2rem' }}
+                  >
+                    <span>Connect With Us</span>
+                    <svg
+                      className="btn__arrow"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="38"
+                      height="10"
+                      viewBox="0 0 59 10"
+                      fill="none"
+                    >
+                      <path d="M0 5H57.5" stroke="currentColor" />
+                      <path d="M53.5 1L57.5 5L53.5 9" stroke="currentColor" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
+      {/* Responsive Inline CSS */}
       <style>{`
-        @media (max-width: 960px) {
-          .desktop-nav { gap: 1.1rem !important; }
-          .phone-badge { display: none !important; }
-        }
-        @media (max-width: 768px) {
-          .desktop-nav { display: none !important; }
-          .mobile-toggle { display: block !important; }
+        @media (max-width: 1024px) {
+          .desktop-nav {
+            display: none !important;
+          }
+          .desktop-connect {
+            display: none !important;
+          }
         }
       `}</style>
     </header>

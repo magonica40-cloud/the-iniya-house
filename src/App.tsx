@@ -1,81 +1,76 @@
 import { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { HomeView } from './components/HomeView';
-import { ServicesView } from './components/ServicesView';
-import { WorkView } from './components/WorkView';
-import { GiftingView } from './components/GiftingView';
-import { ContactView } from './components/ContactView';
 import { Footer } from './components/Footer';
-import { ArrowUpRight, MessageSquare } from 'lucide-react';
+import { CustomCursor } from './components/CustomCursor';
+import { BRAND_INFO } from './data/content';
+import { MessageSquare, ArrowUpRight } from 'lucide-react';
 import './index.css';
 
 export function App() {
-  const [currentTab, setCurrentTab] = useState<string>('home');
+  const [activeSection, setActiveSection] = useState<string>('hero');
   const [showFloatingButton, setShowFloatingButton] = useState<boolean>(false);
 
+  // Monitor scroll for active section & floating button
   useEffect(() => {
     const handleScroll = () => {
-      setShowFloatingButton(window.scrollY > 400);
+      setShowFloatingButton(window.scrollY > 450);
+
+      const sections = ['hero', 'metrics-banner', 'work', 'brands', 'services', 'rentals', 'leisures', 'gifting', 'clientele', 'about', 'contact'];
+      const scrollPos = window.scrollY + 200;
+
+      for (const sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Dynamic SEO Updates Per Tab
-  useEffect(() => {
-    const seoMap: Record<string, { title: string; desc: string }> = {
-      home: {
-        title: 'The Iniya House — Luxury Event Management & Corporate Summits | Bangalore',
-        desc: 'The Iniya House is a premier luxury event management company in Bangalore. Specializing in corporate summits, MICE offsites, AV equipment rental, and corporate gifting with 100+ executed projects.',
-      },
-      services: {
-        title: 'Turnkey Event Production, MICE Offsites & AV Equipment Rental | The Iniya House',
-        desc: 'Explore our full spectrum of corporate events, MICE destination offsites, standalone audio-visual equipment rental, and live interactive scope estimator.',
-      },
-      work: {
-        title: 'Executed Case Dossiers & Scenographic Portfolio | The Iniya House Bangalore',
-        desc: 'Inspect our portfolio of delivered medical conclaves, enterprise assemblies, royal palace galas, and concert stage engineering across South India.',
-      },
-      gifting: {
-        title: 'Curated Corporate Gifting & Executive Hampers | The Iniya House',
-        desc: 'Thoughtfully curated business gifting across 7 categories: electronic gadgets, vegan leather planners, premium drinkware, custom jerseys, trophies, and festive hampers.',
-      },
-      contact: {
-        title: 'Plan Your Event & Commission Inquiries | The Iniya House Atelier Bangalore',
-        desc: 'Direct liaison conduit for initiating corporate summits, MICE offsites, or corporate gifting commissions. Fast 4-hour review and WhatsApp integration.',
-      },
-    };
-
-    const currentSeo = seoMap[currentTab] || seoMap.home;
-    document.title = currentSeo.title;
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', currentSeo.desc);
+  const handleNavigateSection = (sectionId: string) => {
+    setActiveSection(sectionId);
+    if (sectionId === 'hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
     }
-  }, [currentTab]);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const navOffset = 76;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - navOffset;
 
-  const handleNavigate = (tab: string) => {
-    setCurrentTab(tab);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-surface)' }}>
-      {/* Top Navbar */}
-      <Navbar currentTab={currentTab} setCurrentTab={handleNavigate} />
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-canvas)' }}>
+      {/* DNA Networks Interactive Custom Mouse Cursor */}
+      <CustomCursor />
 
-      {/* Main Content Area */}
+      {/* Sticky High-Contrast Navbar */}
+      <Navbar activeSection={activeSection} onNavigateSection={handleNavigateSection} />
+
+      {/* Main Unified Content Experience */}
       <main style={{ flex: 1 }}>
-        {currentTab === 'home' && <HomeView onNavigate={handleNavigate} />}
-        {currentTab === 'services' && <ServicesView onNavigate={handleNavigate} />}
-        {currentTab === 'work' && <WorkView onNavigate={handleNavigate} />}
-        {currentTab === 'gifting' && <GiftingView onNavigate={handleNavigate} />}
-        {currentTab === 'contact' && <ContactView />}
+        <HomeView onNavigateSection={handleNavigateSection} />
       </main>
 
-      {/* Floating WhatsApp Concierge Button */}
+      {/* Persistent Floating WhatsApp Concierge Button */}
       <a
-        href="https://wa.me/917411392703?text=Hello%20The%20Iniya%20House,%20I%20would%20like%20to%20inquire%20about%20curating%20an%20event."
+        href={BRAND_INFO.whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         style={{
@@ -83,32 +78,28 @@ export function App() {
           left: '2rem',
           bottom: '2rem',
           zIndex: 95,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.65rem',
-          padding: '0.75rem 1.25rem',
+          width: '52px',
+          height: '52px',
+          borderRadius: '50%',
           backgroundColor: '#25D366',
           color: '#FFFFFF',
-          borderRadius: '99px',
-          boxShadow: '0 8px 25px rgba(37, 211, 102, 0.4), 0 2px 10px rgba(0, 0, 0, 0.2)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 8px 25px rgba(37, 211, 102, 0.45), 0 4px 12px rgba(0, 0, 0, 0.6)',
           textDecoration: 'none',
-          fontFamily: 'var(--font-mono)',
-          fontSize: '11px',
-          fontWeight: 700,
-          letterSpacing: '0.08em',
           transition: 'transform 0.2s ease, box-shadow 0.2s ease',
         }}
-        className="floating-whatsapp"
-        title="Chat with The Iniya House on WhatsApp"
+        className="pulse-hover"
+        title="Chat with The Iniya House on WhatsApp (+91 74113 92703)"
       >
-        <MessageSquare size={16} color="#FFFFFF" />
-        <span>WhatsApp Concierge</span>
+        <MessageSquare size={22} color="#FFFFFF" />
       </a>
 
-      {/* Sticky Floating Action Button */}
-      {showFloatingButton && currentTab !== 'contact' && (
+      {/* Sticky Floating Action Button to Plan An Event */}
+      {showFloatingButton && activeSection !== 'contact' && (
         <button
-          onClick={() => handleNavigate('contact')}
+          onClick={() => handleNavigateSection('contact')}
           style={{
             position: 'fixed',
             right: '2rem',
@@ -116,31 +107,38 @@ export function App() {
             zIndex: 90,
             display: 'flex',
             alignItems: 'center',
-            gap: '0.65rem',
-            padding: '0.85rem 1.4rem',
-            backgroundColor: 'var(--obsidian-surface)',
+            gap: '0.6rem',
+            padding: '0.85rem 1.35rem',
+            backgroundColor: 'var(--bg-card)',
             color: '#FFFFFF',
-            border: '1px solid var(--gold-primary)',
+            border: '1px solid var(--border-cyan)',
             borderRadius: '99px',
-            boxShadow: '0 8px 30px rgba(0, 0, 0, 0.3), 0 2px 10px rgba(197, 155, 39, 0.25)',
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 194, 203, 0.25)',
             cursor: 'pointer',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '11px',
+            fontFamily: 'var(--font-sans)',
+            fontSize: '12px',
             fontWeight: 700,
-            letterSpacing: '0.14em',
+            letterSpacing: '0.06em',
             textTransform: 'uppercase',
-            transition: 'all 0.3s ease',
+            transition: 'all 0.25s ease',
           }}
-          className="floating-commission"
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'var(--cyan-primary)';
+            e.currentTarget.style.color = '#040812';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'var(--bg-card)';
+            e.currentTarget.style.color = '#FFFFFF';
+          }}
         >
-          <span style={{ color: 'var(--gold-primary)' }}>✦</span>
+          <span style={{ color: 'var(--cyan-primary)' }}>✦</span>
           <span>Plan An Event</span>
-          <ArrowUpRight size={15} color="var(--gold-primary)" />
+          <ArrowUpRight size={14} />
         </button>
       )}
 
-      {/* Global Footer */}
-      <Footer onNavigate={handleNavigate} />
+      {/* Executive Footer */}
+      <Footer onNavigateSection={handleNavigateSection} />
     </div>
   );
 }
